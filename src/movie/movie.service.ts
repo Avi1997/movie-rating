@@ -48,6 +48,7 @@ export class MovieService {
             newMovie.comment.push(movie.comment);
             newMovie.imageUrl = movie.imageUrl;
             newMovie.rating = movie.rating ? [] : newMovie.rating;
+            newMovie.name = movie.name;
             newMovie.rating.push(movie.rating > 10 ? 0 : movie.rating);
 
             newMovie.user = [];

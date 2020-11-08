@@ -1,0 +1,21 @@
+<div class="p-4 bg-danger shadow">
+    <h3 class="text-white">MOVIES</h3>
+</div>
+<div class="card">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/movies-to-watch-1585258004.jpg" width="100%">
+        </div>
+        <div class="col-md-6">
+            <h4 for ="comment"> Comment</h4>
+            <textarea col= "5" row="5" class="col-md-12" id="comment" [(ngModel)] = "comment"></textarea>
+            <h4 for ="rating">Rating</h4>
+            <input type="number"  class="formControl" max="10" min ="0" [(ngModel)] = "rating"><br>
+            <div *ngIf="ratingError">
+                <small class="text-danger">INVALID RATING PLEASE CHOOSE IN BETWEEN 0 & 10</small>
+            </div>
+            <button class="btn btn-danger mt-2" (click) = "postCommentAndRating()">Post</button>
+        </div>
+    </div>
+    
+</div>

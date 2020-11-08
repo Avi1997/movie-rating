@@ -1,0 +1,81 @@
+<section class="container  mt-extra  ">
+    <div class="row border">
+           
+        <div class="p-5  col-md-9">
+            <h1 class="mt-3 pb-3 text-danger  ">Login</h1>
+            <div class="alert alert-info " role="alert" *ngIf="infoFlag">
+                Please login First
+            </div>
+            <div class="alert alert-danger "  role="alert" *ngIf="!userIsThere">
+                Invalid Username or Password
+            </div>
+            <form [formGroup]="loginForm" (ngSubmit)="loginAuthenticate(loginForm)" class="mt-2">
+                <div class="form-row mb-2">
+                    <div class="form-group col-12">
+                        <label for="uname" class="text-danger font-weight-bold">Username</label>
+                        <div class="input-group mb-1">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-white"><i class="material-icons">person</i></span>
+                            </div>
+                            <input
+                                type="text"
+                                formControlName="username"
+                                class="form-control"
+                                id="uname"
+                                placeholder="Enter Your Email"
+                                [ngClass]="[(loginForm.get('username').touched && 
+                                loginForm.get('username').errors?.required) || !userIsThere ? 'is-invalid':'' ]" />
+                        </div>
+                        <div class="small text-danger position-absolute"
+                            *ngIf="loginForm.get('username').touched && loginForm.get('username').errors?.required ">
+                            Username is Required
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row mb-2">
+                    <div class="form-group col-12">
+                        <label for="password" class="text-danger font-weight-bold">Password</label>
+
+                        <div class="input-group mb-1">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-white">
+                                    <i class="material-icons ">vpn_key</i>
+                                </span>
+                            </div>
+                            <input
+                                type="password"
+                                formControlName="password"
+                                class="form-control"
+                                id="password"
+                                placeholder="Enter password" 
+                                [ngClass]="[(loginForm.get('password').touched && 
+                                loginForm.get('password').errors?.required) ||!userIsThere ? 'is-invalid':'' ]"
+                                />
+                        </div>
+                        <div class="small text-danger position-absolute"
+                            *ngIf="loginForm.get('password').touched && 
+                            loginForm.get('password').errors?.required ">
+                            Password is Required
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row mb-2">
+                    <div class=" col-6">
+                        <button type="submit" class="btn btn-danger">
+                            Login
+                        </button>
+                    </div>
+                    <div class="col-6">
+                        <span class="float-right text-danger font-weight-bold">
+                            New Here?
+                            <a routerLink="/sign-up">
+                                Signup
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+     
+    </div>
+</section>
