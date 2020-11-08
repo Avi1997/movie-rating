@@ -1,0 +1,165 @@
+<div class="container mt-extra">
+    <ul class="list-group  ">
+        <ul class="list-group mb-4">
+            <li class="list-group-item list-group-item-danger bg-danger shadow">
+                <h3 class="text-white">Register User</h3>
+            </li>
+        </ul>
+    </ul>
+    <div class="alert alert-success mt-4" role="alert" *ngIf="successMsg">
+        <strong>
+            Signup Successfull !!
+            <a routerLink="/sign-in">
+                click here
+            </a>
+            to login !!
+        </strong>
+    </div>
+    <form [formGroup]="signupForm" (ngSubmit)="userAdd(signupForm)" novalidate *ngIf="!successMsg">
+         <div class=" shadow shadow-lg  ml-2 mr-2 mb-4 p-5">
+            <h4 class="ml-3 text-alignment text-danger">Login Details</h4>
+            <div class="form-row ml-2 mr-2">
+                <div class="col-sm-12 col-lg-6  mt-4">
+                    <label for="user_id">Email ID *</label>
+                    <span *ngIf="signupForm.get('user_id').touched;else elseBlockUserName">
+                        <input type="email" class="form-control" placeholder="Enter Email id" formControlName="user_id"
+                            id="user_id" name="user_id" (keyup)="changeValue()" [ngClass]="{
+                                                                        'border border-danger': 
+                                                                         signupForm.get('user_id').errors?.required
+                                                                         || signupForm.get('user_id').errors?.minlength 
+                                                                         || signupForm.get('user_id').errors?.maxlength|| userPresent, 
+                                                                         '':
+                                                                          !signupForm.get('user_id').errors?.required 
+                                                                         || !signupForm.get('user_id').errors?.minlength 
+                                                                         || !signupForm.get('user_id').errors?.maxlength
+                                                                            }" />
+                        <div>
+                            <div class="text-danger  position-absolute small" *ngIf="signupForm.get('user_id').errors?.minlength 
+                                    || signupForm.get('user_id').errors?.maxlength">
+                                Length should be between 2 & 15!
+                            </div>
+
+                            <div class="text-danger position-absolute small"
+                                *ngIf="signupForm.get('user_id').errors?.required">
+                                USER ID is required!
+                            </div>
+                        </div>
+                    </span>
+                    <ng-template #elseBlockUserName><input type="text" class="form-control" placeholder="Enter User id"
+                            formControlName="user_id" id="user_id" name="user_id" />
+                    </ng-template>
+                    <div *ngIf="userPresent" class="text-danger position-absolute small">
+                        User Already Exists
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row ml-2 mr-2">
+                <div class="col-sm-12 col-md-12 mt-4">
+                    <label for="name">Name *</label>
+                    <span *ngIf="signupForm.get('name').touched;else elseBlockFirstName">
+                        <input type="text" class="form-control" placeholder="Enter First Name" name="name"
+                            formControlName="name" id="name" [ngClass]="{
+                                                        'border border-danger': 
+                                                            signupForm.get('name').errors?.required
+                                                                 || signupForm.get('name').errors?.minlength 
+                                                                    || signupForm.get('name').errors?.maxlength, 
+                                                        '': 
+                                                        !signupForm.get('name').errors?.required 
+                                                            || !signupForm.get('name').errors?.minlength 
+                                                            || !signupForm.get('name').errors?.maxlength
+                                                    }" />
+                        <div>
+                            <div class="text-danger position-absolute small"
+                                *ngIf="signupForm.get('name').errors?.minlength || signupForm.get('name').errors?.maxlength">
+                                Length should be between 2 & 50!
+                            </div>
+
+                            <div class="text-danger position-absolute small"
+                                *ngIf="signupForm.get('name').errors?.required">
+                                First Name is required!
+                            </div>
+                        </div>
+                    </span>
+                </div>
+                <ng-template #elseBlockFirstName><input type="text" class="form-control" placeholder="Enter First Name"
+                        formControlName="name" id="name" name="name" /></ng-template>
+
+
+            </div>
+
+            <div class="form-row ml-2 mr-2">
+                <div class="col-sm-12 col-md-6  mt-4">
+                    <label for="password">Password *</label>
+                    <span *ngIf="signupForm.get('password').touched;else elseBlockPassword">
+                        <input type="password" class="form-control " placeholder="Enter Password" name="password"
+                            formControlName="password" id="password" [ngClass]="{
+                                                    'border border-danger':
+                                                             signupForm.get('password').errors?.required 
+                                                             || signupForm.get('password').errors?.minlength 
+                                                             || signupForm.get('password').errors?.maxlength, 
+                                                     '':
+                                                      !signupForm.get('password').errors?.required 
+                                                      || !signupForm.get('password').errors?.minlength
+                                                      || !signupForm.get('password').errors?.maxlength
+                                  }" />
+
+                        <div>
+                            <div class="text-danger position-absolute small"
+                                *ngIf="signupForm.get('password').errors?.minlength || signupForm.get('password').errors?.maxlength">
+                                Password should be between 2 & 15!
+                            </div>
+
+                            <div class="text-danger position-absolute small"
+                                *ngIf="signupForm.get('password').errors?.required">
+                                Password is required!
+                            </div>
+                        </div>
+                    </span>
+                    <ng-template #elseBlockPassword>
+                        <input type="password" class="form-control " placeholder="Enter Password" name="password"
+                            formControlName="password" id="password" />
+                    </ng-template>
+                </div>
+                <div class="col-sm-12 col-md-6 mt-4">
+                    <label for="cnfpassword">Confirm Password *</label>
+                    <span *ngIf="signupForm.get('confirmPassword').touched;else elseBlockConfirmPassword">
+                        <input type="password" class="form-control" placeholder="Confirm Password" name="password"
+                            formControlName="confirmPassword" id="cnfpassword" (keyup)="checkIfMatchingPasswords()"
+                            [ngClass]="{
+                                    'border border-danger': signupForm.get('confirmPassword').errors?.required, 
+                                    '': !signupForm.get('confirmPassword').errors?.required 
+                                  }" />
+                        <div class="text-danger position-absolute small"
+                            *ngIf="!checkpass && !signupForm.get('confirmPassword').errors?.required">
+                            Passwords should be same
+                        </div>
+                        <div class="text-danger position-absolute small"
+                            *ngIf="signupForm.get('confirmPassword').errors?.required">
+                            Confirm Password is required
+                        </div>
+
+                    </span>
+                    <ng-template #elseBlockConfirmPassword>
+                        <input type="password" class="form-control" placeholder="Confirm Password" name="password"
+                            formControlName="confirmPassword" id="cnfpassword" (keyup)="checkIfMatchingPasswords()" />
+                    </ng-template>
+                </div>
+            </div>
+
+        </div>
+        <div class="shadow shadow-lg ml-2 mr-2 p-5 mt-3">           
+
+            <div class="form-row mt-3  ml-3">
+                <div class="col-lg-12 d-flex justify-content-center ">
+                    <div *ngIf="userPresent" class="text-danger position-absolute font-weight-bold small">
+                        User Already Exists
+                    </div>
+                    <button type="submit" class="btn btn-danger mt-4 shadow"
+                        [disabled]="!signupForm.valid||!checkpass">Signup 
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

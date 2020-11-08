@@ -16,5 +16,8 @@ export class Movie{
     comment: Array<string>;
 
     @Column()
+    name:string;
+
+    @Column()
     user:Array<User>;
 }

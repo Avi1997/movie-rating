@@ -15,14 +15,15 @@ export class AuthService {
 
     }
     async signUp(userDto: UserDto) {
-        try {
-            const { email, password } = userDto;
+        try {           
+            const { email, password,name } = userDto;
             const userThere = await this.userRepository.find({ email });
             if (userThere?.length != 0) {
                 throw new Error('User Already There');
             }
             const user = new User();
             user.email = email;
+            user.name = name;
             user.password = await bcrypt.hash(password, 8);
             return await this.userRepository.save(user);
 
@@ -37,6 +38,7 @@ export class AuthService {
             const password = (req.header('Authorization').replace('Basic ', ''));
 
             const credentials = password.split(':');
+            
             const userIsThere = await this.userRepository.find({ email: credentials[0] });
             let match = false;
             if (userIsThere?.length != 0) {
@@ -47,7 +49,6 @@ export class AuthService {
                 const payload = {email : credentials[0]};
                 
                 const token = await this.jwtService.sign(payload);
-                console.log(token)
                 
                 return { userIsThere, token };
             }
@@ -56,7 +57,7 @@ export class AuthService {
 
         } catch (e) {
             console.log(`Username and password is Incorrect`, e);
-            return { status: 401, message: 'UnAuthorized' }
+            return e;
         }
     }
 }
