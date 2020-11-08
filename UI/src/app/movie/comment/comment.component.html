@@ -1,12 +1,12 @@
 <div class="p-4 bg-danger shadow">
     <h3 class="text-white">MOVIES</h3>
 </div>
-<div class="card">
+<div class="card" >
     <div class="row">
         <div class="col-md-6">
             <img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/movies-to-watch-1585258004.jpg" width="100%">
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" *ngIf="!commented">
             <h4 for ="comment"> Comment</h4>
             <textarea col= "5" row="5" class="col-md-12" id="comment" [(ngModel)] = "comment"></textarea>
             <h4 for ="rating">Rating</h4>
@@ -14,8 +14,26 @@
             <div *ngIf="ratingError">
                 <small class="text-danger">INVALID RATING PLEASE CHOOSE IN BETWEEN 0 & 10</small>
             </div>
+            <div *ngIf="youCant">
+                <small class="text-danger">You Already RATED & COMMENTED. <a routerLink="/show">click here to go back</a></small>
+            </div>
             <button class="btn btn-danger mt-2" (click) = "postCommentAndRating()">Post</button>
         </div>
+        <div class="col-md-6" *ngIf="commented">
+            <h3 class="text-sucess"> Review Posted  <a routerLink="/show">click here to go back</a></h3> 
+        </div>
+
     </div>
     
+</div>
+<div>
+    <ul class="list-group  " *ngIf="cmt">
+
+        <ul class="list-group mb-4">
+           
+            <li class="list-group-item list-group-item-danger bg-danger shadow" *ngFor="let cmnt of movie.comment">
+                <h5 class="text-white">{{cmnt}}</h5>
+            </li>
+        </ul>
+    </ul>
 </div>

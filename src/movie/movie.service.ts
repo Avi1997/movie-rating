@@ -22,18 +22,20 @@ export class MovieService {
                     return present;
                 }
             });
+
             if (present || rating > 10) {
                 return { code: 204, message: 'not allowed' };
             }
 
             movie.comment = movie.comment ? movie.comment : [];
-
+           
             movie.comment.push(comment);
             movie.rating = movie.rating ? movie.rating : [];
             movie.rating.push(rating);
             const email = req.user.email;
             const user = await this.userRepository.find({ email });
-            movie.user.push(user[0]);
+           
+            movie.user.push(user[0]); 
             this.movieRepo.save(movie);
             return movie;
         } catch (e) {

@@ -19,6 +19,16 @@ export class CommentService {
         'Authorization': token
       })
     };
-    return this.http.post(this.baseUrl+"movie/comment"+id,body,httpOption);
+    return this.http.post(this.baseUrl+"movie/comment/"+id,body,httpOption);
+  }
+  filterDataA(direc){
+    let token = "Bearer " + this.authenticationService.getToken();
+    const httpOption = {
+      headers: new HttpHeaders({
+        'content-type': 'application/json',
+        'Authorization': token
+      })
+    };
+    return this.http.get(this.baseUrl+"movie/order/"+direc,httpOption);
   }
 }

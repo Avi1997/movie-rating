@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from '../movie.service';
+import { CommentService } from './comment.service';
 import { Movie } from './Movie';
 
 @Component({
@@ -11,7 +12,8 @@ import { Movie } from './Movie';
 export class MovieComponent implements OnInit {
   movies:Array<Movie>;
   noMovie:boolean;
-  constructor(private movieService:MovieService,private router: Router) { 
+  direction = true;
+  constructor(private movieService:MovieService,private router: Router,private commentService:CommentService) { 
     this.movies = [];
     this.noMovie = false;
   }
@@ -32,7 +34,13 @@ export class MovieComponent implements OnInit {
       }
     })
   }
-
+  filterData(){
+    this.direction =  !this.direction;
+    const val = this.direction  ? 'desc' : 'asc';
+    this.commentService.filterDataA(val).subscribe((res:any) =>{
+      this.movies = res;
+    })
+  }
   goToComment(id){
     this.router.navigate(['/comment',id]);
   }
